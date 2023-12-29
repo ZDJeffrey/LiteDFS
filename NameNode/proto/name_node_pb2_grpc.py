@@ -59,10 +59,20 @@ class NameNodeStub(object):
                 request_serializer=name__node__pb2.PathRequest.SerializeToString,
                 response_deserializer=name__node__pb2.CloseResponse.FromString,
                 )
+        self.beginWrite = channel.unary_unary(
+                '/NameNode/beginWrite',
+                request_serializer=name__node__pb2.PathRequest.SerializeToString,
+                response_deserializer=name__node__pb2.BeginWriteResponse.FromString,
+                )
         self.closeWrite = channel.unary_unary(
                 '/NameNode/closeWrite',
                 request_serializer=name__node__pb2.PathRequest.SerializeToString,
-                response_deserializer=name__node__pb2.CloseWriteResponse.FromString,
+                response_deserializer=name__node__pb2.CloseResponse.FromString,
+                )
+        self.hello = channel.unary_unary(
+                '/NameNode/hello',
+                request_serializer=name__node__pb2.HelloRequest.SerializeToString,
+                response_deserializer=name__node__pb2.HelloResponse.FromString,
                 )
 
 
@@ -123,7 +133,19 @@ class NameNodeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def beginWrite(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def closeWrite(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def hello(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -177,10 +199,20 @@ def add_NameNodeServicer_to_server(servicer, server):
                     request_deserializer=name__node__pb2.PathRequest.FromString,
                     response_serializer=name__node__pb2.CloseResponse.SerializeToString,
             ),
+            'beginWrite': grpc.unary_unary_rpc_method_handler(
+                    servicer.beginWrite,
+                    request_deserializer=name__node__pb2.PathRequest.FromString,
+                    response_serializer=name__node__pb2.BeginWriteResponse.SerializeToString,
+            ),
             'closeWrite': grpc.unary_unary_rpc_method_handler(
                     servicer.closeWrite,
                     request_deserializer=name__node__pb2.PathRequest.FromString,
-                    response_serializer=name__node__pb2.CloseWriteResponse.SerializeToString,
+                    response_serializer=name__node__pb2.CloseResponse.SerializeToString,
+            ),
+            'hello': grpc.unary_unary_rpc_method_handler(
+                    servicer.hello,
+                    request_deserializer=name__node__pb2.HelloRequest.FromString,
+                    response_serializer=name__node__pb2.HelloResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -346,6 +378,23 @@ class NameNode(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def beginWrite(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/NameNode/beginWrite',
+            name__node__pb2.PathRequest.SerializeToString,
+            name__node__pb2.BeginWriteResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def closeWrite(request,
             target,
             options=(),
@@ -358,6 +407,23 @@ class NameNode(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/NameNode/closeWrite',
             name__node__pb2.PathRequest.SerializeToString,
-            name__node__pb2.CloseWriteResponse.FromString,
+            name__node__pb2.CloseResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def hello(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/NameNode/hello',
+            name__node__pb2.HelloRequest.SerializeToString,
+            name__node__pb2.HelloResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

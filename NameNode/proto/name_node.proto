@@ -12,7 +12,9 @@ service NameNode {
     rpc open(OpenRequest) returns (OpenResponse);
     rpc closeTouch(CloseTouchRequest) returns (CloseResponse);
     rpc closeRead(PathRequest) returns (CloseResponse);
-    rpc closeWrite(PathRequest) returns (CloseWriteResponse);
+    rpc beginWrite(PathRequest) returns (BeginWriteResponse);
+    rpc closeWrite(PathRequest) returns (CloseResponse);
+    rpc hello(HelloRequest) returns (HelloResponse);
 }
 
 message PathRequest {
@@ -23,6 +25,7 @@ enum TouchResponseType {
     TOUCH_SUCCESS = 0;
     TOUCH_EXIST = 1;
     TOUCH_INVALID = 2;
+    TOUCH_FAIL = 3;
 }
 
 message TouchResponse {
@@ -125,7 +128,15 @@ message CloseResponse{
     CloseResponseType type = 1;
 }
 
-message CloseWriteResponse{
+message BeginWriteResponse{
     CloseResponseType type = 1;
     google.protobuf.Timestamp ts = 2;
+    repeated string nodes = 3;
+    repeated int32 offsets = 4;
 }
+
+message HelloRequest{
+    string node = 1;
+}
+
+message HelloResponse{}

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+service DataNode {
+    rpc touch(EmptyMsg) returns (TouchDataResponse);
+    rpc rm(RmDataRequest) returns(EmptyMsg);
+    rpc write(stream WriteDataRequest) returns(EmptyMsg);
+    rpc read(ReadDataRequest) returns(stream ReadDataResponse);
+}
+
+message EmptyMsg{}
+
+message TouchDataResponse{
+    int32 offset = 1;
+}
+
+message RmDataRequest{
+    repeated int32 offsets = 1;
+}
+
+message WriteDataRequest{
+    oneof upload{
+        int32 offset = 1;
+        bytes data = 2;
+    }
+}
+
+message ReadDataRequest{
+    int32 offset = 1;
+}
+
+message ReadDataResponse{
+    bytes data = 1;
+}

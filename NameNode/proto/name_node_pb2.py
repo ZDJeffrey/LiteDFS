@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0fname_node.proto\x1a\x1fgoogle/protobuf/timestamp.proto\" \n\x0bPathRequest\x12\x11\n\tpath_list\x18\x01 \x03(\t\"h\n\rTouchResponse\x12 \n\x04type\x18\x01 \x01(\x0e\x32\x12.TouchResponseType\x12&\n\x02ts\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05nodes\x18\x03 \x03(\t\"1\n\rMkdirResponse\x12 \n\x04type\x18\x01 \x01(\x0e\x32\x12.MkdirResponseType\":\n\nLsResponse\x12\x1d\n\x04type\x18\x01 \x01(\x0e\x32\x0f.LsResponseType\x12\r\n\x05\x66iles\x18\x02 \x03(\t\"+\n\nCdResponse\x12\x1d\n\x04type\x18\x01 \x01(\x0e\x32\x0f.CdResponseType\",\n\x0bNodeOffsets\x12\x0c\n\x04node\x18\x01 \x01(\t\x12\x0f\n\x07offsets\x18\x02 \x03(\x05\"O\n\nRmResponse\x12\x1d\n\x04type\x18\x01 \x01(\x0e\x32\x0f.RmResponseType\x12\"\n\x0cnode_offsets\x18\x02 \x03(\x0b\x32\x0c.NodeOffsets\"U\n\rRmdirResponse\x12 \n\x04type\x18\x01 \x01(\x0e\x32\x12.RmdirResponseType\x12\"\n\x0cnode_offsets\x18\x02 \x03(\x0b\x32\x0c.NodeOffsets\"@\n\x0bOpenRequest\x12\x1e\n\x04type\x18\x01 \x01(\x0e\x32\x10.OpenRequestType\x12\x11\n\tpath_list\x18\x02 \x03(\t\"u\n\x0cOpenResponse\x12\x1f\n\x04type\x18\x01 \x01(\x0e\x32\x11.OpenResponseType\x12&\n\x02ts\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04node\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\"7\n\x11\x43loseTouchRequest\x12\x11\n\tpath_list\x18\x01 \x03(\t\x12\x0f\n\x07offsets\x18\x02 \x03(\x05\"1\n\rCloseResponse\x12 \n\x04type\x18\x01 \x01(\x0e\x32\x12.CloseResponseType\"^\n\x12\x43loseWriteResponse\x12 \n\x04type\x18\x01 \x01(\x0e\x32\x12.CloseResponseType\x12&\n\x02ts\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp*J\n\x11TouchResponseType\x12\x11\n\rTOUCH_SUCCESS\x10\x00\x12\x0f\n\x0bTOUCH_EXIST\x10\x01\x12\x11\n\rTOUCH_INVALID\x10\x02*J\n\x11MkdirResponseType\x12\x11\n\rMKDIR_SUCCESS\x10\x00\x12\x0f\n\x0bMKDIR_EXIST\x10\x01\x12\x11\n\rMKDIR_INVALID\x10\x02*0\n\x0eLsResponseType\x12\x0e\n\nLS_SUCCESS\x10\x00\x12\x0e\n\nLS_INVALID\x10\x01*0\n\x0e\x43\x64ResponseType\x12\x0e\n\nCD_SUCCESS\x10\x00\x12\x0e\n\nCD_INVALID\x10\x01*=\n\x0eRmResponseType\x12\x0e\n\nRM_SUCCESS\x10\x00\x12\x0e\n\nRM_INVALID\x10\x01\x12\x0b\n\x07RM_LOCK\x10\x02*I\n\x11RmdirResponseType\x12\x11\n\rRMDIR_SUCCESS\x10\x00\x12\x11\n\rRMDIR_INVALID\x10\x01\x12\x0e\n\nRMDIR_LOCK\x10\x02*0\n\x0fOpenRequestType\x12\r\n\tOPEN_READ\x10\x00\x12\x0e\n\nOPEN_WRITE\x10\x01*E\n\x10OpenResponseType\x12\x10\n\x0cOPEN_SUCCESS\x10\x00\x12\x10\n\x0cOPEN_INVALID\x10\x01\x12\r\n\tOPEN_LOCK\x10\x02*I\n\x11\x43loseResponseType\x12\x11\n\rCLOSE_SUCCESS\x10\x00\x12\x11\n\rCLOSE_INVALID\x10\x01\x12\x0e\n\nCLOSE_FAIL\x10\x02\x32\x95\x03\n\x08NameNode\x12%\n\x05touch\x12\x0c.PathRequest\x1a\x0e.TouchResponse\x12%\n\x05mkdir\x12\x0c.PathRequest\x1a\x0e.MkdirResponse\x12\x1f\n\x02ls\x12\x0c.PathRequest\x1a\x0b.LsResponse\x12\x1f\n\x02\x63\x64\x12\x0c.PathRequest\x1a\x0b.CdResponse\x12\x1f\n\x02rm\x12\x0c.PathRequest\x1a\x0b.RmResponse\x12%\n\x05rmdir\x12\x0c.PathRequest\x1a\x0e.RmdirResponse\x12#\n\x04open\x12\x0c.OpenRequest\x1a\r.OpenResponse\x12\x30\n\ncloseTouch\x12\x12.CloseTouchRequest\x1a\x0e.CloseResponse\x12)\n\tcloseRead\x12\x0c.PathRequest\x1a\x0e.CloseResponse\x12/\n\ncloseWrite\x12\x0c.PathRequest\x1a\x13.CloseWriteResponseb\x06proto3'
+  serialized_pb=b'\n\x0fname_node.proto\x1a\x1fgoogle/protobuf/timestamp.proto\" \n\x0bPathRequest\x12\x11\n\tpath_list\x18\x01 \x03(\t\"h\n\rTouchResponse\x12 \n\x04type\x18\x01 \x01(\x0e\x32\x12.TouchResponseType\x12&\n\x02ts\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05nodes\x18\x03 \x03(\t\"1\n\rMkdirResponse\x12 \n\x04type\x18\x01 \x01(\x0e\x32\x12.MkdirResponseType\":\n\nLsResponse\x12\x1d\n\x04type\x18\x01 \x01(\x0e\x32\x0f.LsResponseType\x12\r\n\x05\x66iles\x18\x02 \x03(\t\"+\n\nCdResponse\x12\x1d\n\x04type\x18\x01 \x01(\x0e\x32\x0f.CdResponseType\",\n\x0bNodeOffsets\x12\x0c\n\x04node\x18\x01 \x01(\t\x12\x0f\n\x07offsets\x18\x02 \x03(\x05\"O\n\nRmResponse\x12\x1d\n\x04type\x18\x01 \x01(\x0e\x32\x0f.RmResponseType\x12\"\n\x0cnode_offsets\x18\x02 \x03(\x0b\x32\x0c.NodeOffsets\"U\n\rRmdirResponse\x12 \n\x04type\x18\x01 \x01(\x0e\x32\x12.RmdirResponseType\x12\"\n\x0cnode_offsets\x18\x02 \x03(\x0b\x32\x0c.NodeOffsets\"@\n\x0bOpenRequest\x12\x1e\n\x04type\x18\x01 \x01(\x0e\x32\x10.OpenRequestType\x12\x11\n\tpath_list\x18\x02 \x03(\t\"u\n\x0cOpenResponse\x12\x1f\n\x04type\x18\x01 \x01(\x0e\x32\x11.OpenResponseType\x12&\n\x02ts\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04node\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\"7\n\x11\x43loseTouchRequest\x12\x11\n\tpath_list\x18\x01 \x03(\t\x12\x0f\n\x07offsets\x18\x02 \x03(\x05\"1\n\rCloseResponse\x12 \n\x04type\x18\x01 \x01(\x0e\x32\x12.CloseResponseType\"~\n\x12\x42\x65ginWriteResponse\x12 \n\x04type\x18\x01 \x01(\x0e\x32\x12.CloseResponseType\x12&\n\x02ts\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05nodes\x18\x03 \x03(\t\x12\x0f\n\x07offsets\x18\x04 \x03(\x05\"\x1c\n\x0cHelloRequest\x12\x0c\n\x04node\x18\x01 \x01(\t\"\x0f\n\rHelloResponse*Z\n\x11TouchResponseType\x12\x11\n\rTOUCH_SUCCESS\x10\x00\x12\x0f\n\x0bTOUCH_EXIST\x10\x01\x12\x11\n\rTOUCH_INVALID\x10\x02\x12\x0e\n\nTOUCH_FAIL\x10\x03*J\n\x11MkdirResponseType\x12\x11\n\rMKDIR_SUCCESS\x10\x00\x12\x0f\n\x0bMKDIR_EXIST\x10\x01\x12\x11\n\rMKDIR_INVALID\x10\x02*0\n\x0eLsResponseType\x12\x0e\n\nLS_SUCCESS\x10\x00\x12\x0e\n\nLS_INVALID\x10\x01*0\n\x0e\x43\x64ResponseType\x12\x0e\n\nCD_SUCCESS\x10\x00\x12\x0e\n\nCD_INVALID\x10\x01*=\n\x0eRmResponseType\x12\x0e\n\nRM_SUCCESS\x10\x00\x12\x0e\n\nRM_INVALID\x10\x01\x12\x0b\n\x07RM_LOCK\x10\x02*I\n\x11RmdirResponseType\x12\x11\n\rRMDIR_SUCCESS\x10\x00\x12\x11\n\rRMDIR_INVALID\x10\x01\x12\x0e\n\nRMDIR_LOCK\x10\x02*0\n\x0fOpenRequestType\x12\r\n\tOPEN_READ\x10\x00\x12\x0e\n\nOPEN_WRITE\x10\x01*E\n\x10OpenResponseType\x12\x10\n\x0cOPEN_SUCCESS\x10\x00\x12\x10\n\x0cOPEN_INVALID\x10\x01\x12\r\n\tOPEN_LOCK\x10\x02*I\n\x11\x43loseResponseType\x12\x11\n\rCLOSE_SUCCESS\x10\x00\x12\x11\n\rCLOSE_INVALID\x10\x01\x12\x0e\n\nCLOSE_FAIL\x10\x02\x32\xe9\x03\n\x08NameNode\x12%\n\x05touch\x12\x0c.PathRequest\x1a\x0e.TouchResponse\x12%\n\x05mkdir\x12\x0c.PathRequest\x1a\x0e.MkdirResponse\x12\x1f\n\x02ls\x12\x0c.PathRequest\x1a\x0b.LsResponse\x12\x1f\n\x02\x63\x64\x12\x0c.PathRequest\x1a\x0b.CdResponse\x12\x1f\n\x02rm\x12\x0c.PathRequest\x1a\x0b.RmResponse\x12%\n\x05rmdir\x12\x0c.PathRequest\x1a\x0e.RmdirResponse\x12#\n\x04open\x12\x0c.OpenRequest\x1a\r.OpenResponse\x12\x30\n\ncloseTouch\x12\x12.CloseTouchRequest\x1a\x0e.CloseResponse\x12)\n\tcloseRead\x12\x0c.PathRequest\x1a\x0e.CloseResponse\x12/\n\nbeginWrite\x12\x0c.PathRequest\x1a\x13.BeginWriteResponse\x12*\n\ncloseWrite\x12\x0c.PathRequest\x1a\x0e.CloseResponse\x12&\n\x05hello\x12\r.HelloRequest\x1a\x0e.HelloResponseb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -47,11 +47,16 @@ _TOUCHRESPONSETYPE = _descriptor.EnumDescriptor(
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='TOUCH_FAIL', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=951,
-  serialized_end=1025,
+  serialized_start=1030,
+  serialized_end=1120,
 )
 _sym_db.RegisterEnumDescriptor(_TOUCHRESPONSETYPE)
 
@@ -81,8 +86,8 @@ _MKDIRRESPONSETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1027,
-  serialized_end=1101,
+  serialized_start=1122,
+  serialized_end=1196,
 )
 _sym_db.RegisterEnumDescriptor(_MKDIRRESPONSETYPE)
 
@@ -107,8 +112,8 @@ _LSRESPONSETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1103,
-  serialized_end=1151,
+  serialized_start=1198,
+  serialized_end=1246,
 )
 _sym_db.RegisterEnumDescriptor(_LSRESPONSETYPE)
 
@@ -133,8 +138,8 @@ _CDRESPONSETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1153,
-  serialized_end=1201,
+  serialized_start=1248,
+  serialized_end=1296,
 )
 _sym_db.RegisterEnumDescriptor(_CDRESPONSETYPE)
 
@@ -164,8 +169,8 @@ _RMRESPONSETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1203,
-  serialized_end=1264,
+  serialized_start=1298,
+  serialized_end=1359,
 )
 _sym_db.RegisterEnumDescriptor(_RMRESPONSETYPE)
 
@@ -195,8 +200,8 @@ _RMDIRRESPONSETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1266,
-  serialized_end=1339,
+  serialized_start=1361,
+  serialized_end=1434,
 )
 _sym_db.RegisterEnumDescriptor(_RMDIRRESPONSETYPE)
 
@@ -221,8 +226,8 @@ _OPENREQUESTTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1341,
-  serialized_end=1389,
+  serialized_start=1436,
+  serialized_end=1484,
 )
 _sym_db.RegisterEnumDescriptor(_OPENREQUESTTYPE)
 
@@ -252,8 +257,8 @@ _OPENRESPONSETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1391,
-  serialized_end=1460,
+  serialized_start=1486,
+  serialized_end=1555,
 )
 _sym_db.RegisterEnumDescriptor(_OPENRESPONSETYPE)
 
@@ -283,8 +288,8 @@ _CLOSERESPONSETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1462,
-  serialized_end=1535,
+  serialized_start=1557,
+  serialized_end=1630,
 )
 _sym_db.RegisterEnumDescriptor(_CLOSERESPONSETYPE)
 
@@ -292,6 +297,7 @@ CloseResponseType = enum_type_wrapper.EnumTypeWrapper(_CLOSERESPONSETYPE)
 TOUCH_SUCCESS = 0
 TOUCH_EXIST = 1
 TOUCH_INVALID = 2
+TOUCH_FAIL = 3
 MKDIR_SUCCESS = 0
 MKDIR_EXIST = 1
 MKDIR_INVALID = 2
@@ -777,25 +783,39 @@ _CLOSERESPONSE = _descriptor.Descriptor(
 )
 
 
-_CLOSEWRITERESPONSE = _descriptor.Descriptor(
-  name='CloseWriteResponse',
-  full_name='CloseWriteResponse',
+_BEGINWRITERESPONSE = _descriptor.Descriptor(
+  name='BeginWriteResponse',
+  full_name='BeginWriteResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='type', full_name='CloseWriteResponse.type', index=0,
+      name='type', full_name='BeginWriteResponse.type', index=0,
       number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='ts', full_name='CloseWriteResponse.ts', index=1,
+      name='ts', full_name='BeginWriteResponse.ts', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='nodes', full_name='BeginWriteResponse.nodes', index=2,
+      number=3, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='offsets', full_name='BeginWriteResponse.offsets', index=3,
+      number=4, type=5, cpp_type=1, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -812,7 +832,64 @@ _CLOSEWRITERESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=855,
-  serialized_end=949,
+  serialized_end=981,
+)
+
+
+_HELLOREQUEST = _descriptor.Descriptor(
+  name='HelloRequest',
+  full_name='HelloRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='node', full_name='HelloRequest.node', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=983,
+  serialized_end=1011,
+)
+
+
+_HELLORESPONSE = _descriptor.Descriptor(
+  name='HelloResponse',
+  full_name='HelloResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1013,
+  serialized_end=1028,
 )
 
 _TOUCHRESPONSE.fields_by_name['type'].enum_type = _TOUCHRESPONSETYPE
@@ -828,8 +905,8 @@ _OPENREQUEST.fields_by_name['type'].enum_type = _OPENREQUESTTYPE
 _OPENRESPONSE.fields_by_name['type'].enum_type = _OPENRESPONSETYPE
 _OPENRESPONSE.fields_by_name['ts'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _CLOSERESPONSE.fields_by_name['type'].enum_type = _CLOSERESPONSETYPE
-_CLOSEWRITERESPONSE.fields_by_name['type'].enum_type = _CLOSERESPONSETYPE
-_CLOSEWRITERESPONSE.fields_by_name['ts'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_BEGINWRITERESPONSE.fields_by_name['type'].enum_type = _CLOSERESPONSETYPE
+_BEGINWRITERESPONSE.fields_by_name['ts'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 DESCRIPTOR.message_types_by_name['PathRequest'] = _PATHREQUEST
 DESCRIPTOR.message_types_by_name['TouchResponse'] = _TOUCHRESPONSE
 DESCRIPTOR.message_types_by_name['MkdirResponse'] = _MKDIRRESPONSE
@@ -842,7 +919,9 @@ DESCRIPTOR.message_types_by_name['OpenRequest'] = _OPENREQUEST
 DESCRIPTOR.message_types_by_name['OpenResponse'] = _OPENRESPONSE
 DESCRIPTOR.message_types_by_name['CloseTouchRequest'] = _CLOSETOUCHREQUEST
 DESCRIPTOR.message_types_by_name['CloseResponse'] = _CLOSERESPONSE
-DESCRIPTOR.message_types_by_name['CloseWriteResponse'] = _CLOSEWRITERESPONSE
+DESCRIPTOR.message_types_by_name['BeginWriteResponse'] = _BEGINWRITERESPONSE
+DESCRIPTOR.message_types_by_name['HelloRequest'] = _HELLOREQUEST
+DESCRIPTOR.message_types_by_name['HelloResponse'] = _HELLORESPONSE
 DESCRIPTOR.enum_types_by_name['TouchResponseType'] = _TOUCHRESPONSETYPE
 DESCRIPTOR.enum_types_by_name['MkdirResponseType'] = _MKDIRRESPONSETYPE
 DESCRIPTOR.enum_types_by_name['LsResponseType'] = _LSRESPONSETYPE
@@ -938,12 +1017,26 @@ CloseResponse = _reflection.GeneratedProtocolMessageType('CloseResponse', (_mess
   })
 _sym_db.RegisterMessage(CloseResponse)
 
-CloseWriteResponse = _reflection.GeneratedProtocolMessageType('CloseWriteResponse', (_message.Message,), {
-  'DESCRIPTOR' : _CLOSEWRITERESPONSE,
+BeginWriteResponse = _reflection.GeneratedProtocolMessageType('BeginWriteResponse', (_message.Message,), {
+  'DESCRIPTOR' : _BEGINWRITERESPONSE,
   '__module__' : 'name_node_pb2'
-  # @@protoc_insertion_point(class_scope:CloseWriteResponse)
+  # @@protoc_insertion_point(class_scope:BeginWriteResponse)
   })
-_sym_db.RegisterMessage(CloseWriteResponse)
+_sym_db.RegisterMessage(BeginWriteResponse)
+
+HelloRequest = _reflection.GeneratedProtocolMessageType('HelloRequest', (_message.Message,), {
+  'DESCRIPTOR' : _HELLOREQUEST,
+  '__module__' : 'name_node_pb2'
+  # @@protoc_insertion_point(class_scope:HelloRequest)
+  })
+_sym_db.RegisterMessage(HelloRequest)
+
+HelloResponse = _reflection.GeneratedProtocolMessageType('HelloResponse', (_message.Message,), {
+  'DESCRIPTOR' : _HELLORESPONSE,
+  '__module__' : 'name_node_pb2'
+  # @@protoc_insertion_point(class_scope:HelloResponse)
+  })
+_sym_db.RegisterMessage(HelloResponse)
 
 
 
@@ -954,8 +1047,8 @@ _NAMENODE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=1538,
-  serialized_end=1943,
+  serialized_start=1633,
+  serialized_end=2122,
   methods=[
   _descriptor.MethodDescriptor(
     name='touch',
@@ -1048,12 +1141,32 @@ _NAMENODE = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='closeWrite',
-    full_name='NameNode.closeWrite',
+    name='beginWrite',
+    full_name='NameNode.beginWrite',
     index=9,
     containing_service=None,
     input_type=_PATHREQUEST,
-    output_type=_CLOSEWRITERESPONSE,
+    output_type=_BEGINWRITERESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='closeWrite',
+    full_name='NameNode.closeWrite',
+    index=10,
+    containing_service=None,
+    input_type=_PATHREQUEST,
+    output_type=_CLOSERESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='hello',
+    full_name='NameNode.hello',
+    index=11,
+    containing_service=None,
+    input_type=_HELLOREQUEST,
+    output_type=_HELLORESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
