@@ -1,0 +1,131 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+service NameNode {
+    rpc touch(PathRequest) returns (TouchResponse);
+    rpc mkdir(PathRequest) returns (MkdirResponse);
+    rpc ls(PathRequest) returns (LsResponse);
+    rpc cd(PathRequest) returns (CdResponse);
+    rpc rm(PathRequest) returns (RmResponse);
+    rpc rmdir(PathRequest) returns (RmdirResponse);
+    rpc open(OpenRequest) returns (OpenResponse);
+    rpc closeTouch(CloseTouchRequest) returns (CloseResponse);
+    rpc closeRead(PathRequest) returns (CloseResponse);
+    rpc closeWrite(PathRequest) returns (CloseWriteResponse);
+}
+
+message PathRequest {
+    repeated string path_list = 1;
+}
+
+enum TouchResponseType {
+    TOUCH_SUCCESS = 0;
+    TOUCH_EXIST = 1;
+    TOUCH_INVALID = 2;
+}
+
+message TouchResponse {
+    TouchResponseType type = 1;
+    google.protobuf.Timestamp ts = 2;
+    repeated string nodes = 3;
+}
+
+enum MkdirResponseType{
+    MKDIR_SUCCESS = 0;
+    MKDIR_EXIST = 1;
+    MKDIR_INVALID = 2;
+}
+
+message MkdirResponse{
+    MkdirResponseType type = 1;
+}
+
+enum LsResponseType{
+    LS_SUCCESS = 0;
+    LS_INVALID = 1;
+}
+
+message LsResponse{
+    LsResponseType type = 1;
+    repeated string files = 2;
+}
+
+enum CdResponseType{
+    CD_SUCCESS = 0;
+    CD_INVALID = 1;
+}
+
+message CdResponse{
+    CdResponseType type = 1;
+}
+
+message NodeOffsets{
+    string node = 1;
+    repeated int32 offsets = 2;
+}
+
+enum RmResponseType{
+    RM_SUCCESS = 0;
+    RM_INVALID = 1;
+    RM_LOCK = 2;
+}
+
+message RmResponse{
+    RmResponseType type = 1;
+    repeated NodeOffsets node_offsets = 2;
+}
+
+enum RmdirResponseType{
+    RMDIR_SUCCESS = 0;
+    RMDIR_INVALID = 1;
+    RMDIR_LOCK = 2;
+}
+
+message RmdirResponse{
+    RmdirResponseType type = 1;
+    repeated NodeOffsets node_offsets = 2;
+}
+
+enum OpenRequestType{
+    OPEN_READ = 0;
+    OPEN_WRITE = 1;
+}
+
+message OpenRequest{
+    OpenRequestType type = 1;
+    repeated string path_list = 2;
+}
+
+enum OpenResponseType{
+    OPEN_SUCCESS = 0;
+    OPEN_INVALID = 1;
+    OPEN_LOCK = 2;
+}
+
+message OpenResponse{
+    OpenResponseType type = 1;
+    google.protobuf.Timestamp ts = 2;
+    string node = 3;
+    int32 offset = 4;
+}
+
+message CloseTouchRequest{
+    repeated string path_list = 1;
+    repeated int32 offsets = 2;
+}
+
+enum CloseResponseType{
+    CLOSE_SUCCESS = 0;
+    CLOSE_INVALID = 1;
+    CLOSE_FAIL = 2;
+}
+
+message CloseResponse{
+    CloseResponseType type = 1;
+}
+
+message CloseWriteResponse{
+    CloseResponseType type = 1;
+    google.protobuf.Timestamp ts = 2;
+}

@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./NameNode/proto",
+        "./DataNode/proto"
+    ]
+}
