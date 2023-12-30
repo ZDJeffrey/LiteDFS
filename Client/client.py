@@ -3,8 +3,8 @@ import os
 import shutil
 import uuid
 import subprocess
-import tempfile
 import argparse
+from concurrent import futures
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(root)
@@ -21,9 +21,9 @@ import data_node_pb2_grpc as d_pb2_grpc
 class Client:
     def __init__(self, name:str) -> None:
         self.path = '/' # 命令行当前路径
-        self.perfix = os.path.join(DFS_parameter.__client_cache__+name+'/') # 缓存文件夹
-        if not os.path.exists(self.perfix): # 创建缓存文件夹
-            os.makedirs(self.perfix)
+        self.prefix = os.path.join(DFS_parameter.__client_cache__+name+'/') # 缓存文件夹
+        if not os.path.exists(self.prefix): # 创建缓存文件夹
+            os.makedirs(self.prefix)
         self.name = name # 客户名称
         self.ip_port = DFS_parameter.__name_node_ip_port__
         self.file_cache = {} # 文件缓存列表{filename: }
@@ -79,13 +79,29 @@ class Client:
             if folder_key[-1] == '/': # 文件夹
                 self.delete_dir_in_cache(folder, folder_key[:-1])
             else: # 文件
-                os.remove(self.perfix + folder[folder_key]['id'])
+                os.remove(self.prefix + folder[folder_key]['id'])
 
     def upload_file(self, offset, file_path):
         yield d_pb2.WriteDataRequest(offset=offset)
         with open(file_path, 'rb') as file:
             for chunk in iter(lambda: file.read(DFS_parameter.__chunk_size__), b''):
                 yield d_pb2.WriteDataRequest(data=chunk)
+    
+    def upload_file_to_node(self, node, offset, data_iter):
+        with grpc.insecure_channel(node) as channel:
+            stub = d_pb2_grpc.DataNodeStub(channel)
+            if DFS_parameter.__verbose_message__:
+                print(f'Upload to {node}')
+            stub.write(data_iter)
+    
+    def delete_data_in_node(self, node_offset):
+        node = node_offset.node
+        offsets = node_offset.offsets
+        with grpc.insecure_channel(node) as channel:
+            stub = d_pb2_grpc.DataNodeStub(channel)
+            stub.rm(d_pb2.RmDataRequest(offsets=offsets))
+        if DFS_parameter.__verbose_message__:
+            print(f'Delete data in {node}')
 
         
     def touch(self, path):
@@ -124,7 +140,7 @@ class Client:
             file['id'] = str(uuid.uuid5(uuid.NAMESPACE_URL, '/'.join(path_list))) # 文件id
             file['ts'] = ts # 时间戳
             # 添加缓存文件
-            file = open(self.perfix + file['id'], 'w')
+            file = open(self.prefix + file['id'], 'w')
             file.close()
 
 
@@ -184,16 +200,12 @@ class Client:
         elif response.type == n_pb2.RmResponseType.Value('RM_SUCCESS'):
             node_offsets = response.node_offsets
             # 删除文件
-            for node_offset in node_offsets:
-                node = node_offset.node
-                offsets = node_offset.offsets
-                with grpc.insecure_channel(node) as channel:
-                    stub = d_pb2_grpc.DataNodeStub(channel)
-                    stub.rm(d_pb2.RmDataRequest(offsets=offsets))
+            with futures.ThreadPoolExecutor() as executor: # 并行
+                executor.map(self.delete_data_in_node, node_offsets)
             folder = self.search_file_in_cache(path_list) # 存在本地缓存
             if folder is not None: # 删除缓存
                 file = folder[path_list[-1]]
-                file_path = self.perfix + file['id']
+                file_path = self.prefix + file['id']
                 os.remove(file_path)
                 del folder[path_list[-1]]
                 if DFS_parameter.__verbose_message__:
@@ -217,12 +229,8 @@ class Client:
         elif response.type == n_pb2.RmdirResponseType.Value('RMDIR_SUCCESS'):
             node_offsets = response.node_offsets
             # 删除文件夹内所有文件
-            for node_offset in node_offsets:
-                node = node_offset.node
-                offsets = node_offset.offsets
-                with grpc.insecure_channel(node) as channel:
-                    stub = d_pb2_grpc.DataNodeStub(channel)
-                    stub.rm(d_pb2.RmDataRequest(offsets=offsets))
+            with futures.ThreadPoolExecutor() as executor:
+                executor.map(self.delete_data_in_node, node_offsets)
             # 删除缓存
             folder = self.search_dir_in_cache(path_list)
             if folder is not None:
@@ -252,7 +260,7 @@ class Client:
                 if file['ts'] == response.ts: # 缓存未过期
                     if DFS_parameter.__verbose_message__:
                         print('Use cache')
-                    return self.perfix + file['id']
+                    return self.prefix + file['id']
                 if DFS_parameter.__verbose_message__:
                     print('Cache expire')
             else: # 创建缓存
@@ -272,10 +280,10 @@ class Client:
                 with grpc.insecure_channel(node) as channel:
                     stub = d_pb2_grpc.DataNodeStub(channel)
                     response_iterator = stub.read(d_pb2.ReadDataRequest(offset=offset))
-                    with open(self.perfix + file['id'], 'wb') as cache:
+                    with open(self.prefix + file['id'], 'wb') as cache:
                         for response in response_iterator:
                             cache.write(response.data)
-                return self.perfix + file['id']
+                return self.prefix + file['id']
         return None
 
 
@@ -308,11 +316,13 @@ class Client:
                 # 写入文件至存储节点
                 nodes = response.nodes
                 offsets = response.offsets
-                for node, offset in zip(nodes, offsets):
-                    with grpc.insecure_channel(node) as channel:
-                        stub = d_pb2_grpc.DataNodeStub(channel)
-                        upload = self.upload_file(offset, self.perfix + folder[path_list[-1]]['id'])
-                        stub.write(upload)
+                # 使用 ThreadPoolExecutor 并行处理上传
+                with futures.ThreadPoolExecutor() as executor:
+                    # 将节点、偏移量和上传数据打包成元组
+                    data_to_upload = zip(nodes, offsets, [self.upload_file(offset, self.prefix + folder[path_list[-1]]['id']) for offset in offsets])
+
+                    # 使用 map 方法并行处理上传
+                    executor.map(lambda args:self.upload_file_to_node(*args), data_to_upload)
                 # 结束写入
                 response = self.stub.closeWrite(n_pb2.PathRequest(path_list=path_list))
                 if response.type == n_pb2.CloseResponseType.Value('CLOSE_INVALID'):
@@ -329,7 +339,7 @@ class Client:
 
     def exit(self):
         self.channel.close()
-        shutil.rmtree(self.perfix) # 删除缓存文件夹
+        shutil.rmtree(self.prefix) # 删除缓存文件夹
         print('Bye')
 
     

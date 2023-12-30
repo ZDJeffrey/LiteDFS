@@ -27,16 +27,16 @@ class DataNode(d_pb2_grpc.DataNodeServicer):
         if DFS_parameter.__verbose_message__:
             print(f'Data Node {self.ip_port} online')
         # 创建文件夹
-        self.perfix = DFS_parameter.__data_node_storage__+self.ip_port.replace(':','_')+'/'
-        if not os.path.exists(self.perfix):
-            os.makedirs(self.perfix)
+        self.prefix = DFS_parameter.__data_node_storage__+self.ip_port.replace(':','_')+'/'
+        if not os.path.exists(self.prefix):
+            os.makedirs(self.prefix)
         
     def touch(self, request, context):
         block_id = next(i for i, block in enumerate(self.blocks) if block)
         self.blocks[block_id]=False
         if DFS_parameter.__verbose_message__:
             print(f'{self.ip_port}:>Create new block {block_id}')
-        file = open(self.perfix+str(block_id),'w') # 创建块
+        file = open(self.prefix+str(block_id),'w') # 创建块
         file.close()
         return d_pb2.TouchDataResponse(offset=block_id)
     
@@ -50,7 +50,7 @@ class DataNode(d_pb2_grpc.DataNodeServicer):
     
     def read(self, request, context):
         offset = request.offset
-        with open(self.perfix+str(offset),'rb') as file:
+        with open(self.prefix+str(offset),'rb') as file:
             for chunk in iter(lambda: file.read(DFS_parameter.__chunk_size__), b''):
                 yield d_pb2.ReadDataResponse(data=chunk)
 
@@ -60,7 +60,7 @@ class DataNode(d_pb2_grpc.DataNodeServicer):
         for chunk in request_iterator:
             if offset is None:
                 offset = chunk.offset
-                file = open(self.perfix+str(offset),'wb')
+                file = open(self.prefix+str(offset),'wb')
             else:
                 file.write(chunk.data)
         file.close()
@@ -69,8 +69,8 @@ class DataNode(d_pb2_grpc.DataNodeServicer):
         return d_pb2.EmptyMsg()
     
     def exit(self):
-        if os.path.exists(self.perfix):
-            shutil.rmtree(self.perfix)
+        if os.path.exists(self.prefix):
+            shutil.rmtree(self.prefix)
     
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
