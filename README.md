@@ -2,6 +2,12 @@
 LiteDFS is a simple distributed file system implementation as a course project of Distributed System using gRPC to communicate between servers and clients.
 LiteDFS uses a master-slave architecture. The master node, NameNode, is responsible for managing the metadata of the file system. The slave node, DataNode, is responsible for storing the replica data of the file system. The client can access the file system through the NameNode and get the data from the DataNode.Clients can cache the data in the local file system to improve the performance. To ensure the consistence among the replicas, LiteDFS adopts instantaneous consistency model using file read-write lock, which means the replicas are updated immediately after the file is updated. In additon, to ensure the consistency between the client's cache and the replicas, LiteDFS use timestamp to check whether the cache is out of date. If the cache is out of date, the client will update the cache from the replicas.
 LiteDFS supports basic file operations, such as touch, mkdir, ls, rm, vim, cat, etc.
+
+<center>
+    <img src="img/architecture.drawio.png" height="300px" />
+    <figcaption style="font-size:14px">LiteDFS架构</figcaption>
+</center>
+
 ## File Structure
 ```shell
 .
