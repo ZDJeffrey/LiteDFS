@@ -87,10 +87,10 @@ def serve():
             print("Shutting down gracefully...")
 
 parser = argparse.ArgumentParser(description='LiteDFS Data Node')
-parser.add_argument('ip', type=str, help='The ip address of data node', default='127.0.0.1')
-parser.add_argument('port', type=int, help='The port of data node to provide services', default=50052)
-parser.add_argument('block', type=int, help='The total number of block in the data node', default=1024)
+parser.add_argument('--ip', type=str, help='The ip address of data node', default='127.0.0.1')
+parser.add_argument('--port', type=int, help='The port of data node to provide services', default=50052)
+parser.add_argument('--block', type=int, help='The total number of block in the data node', default=1024)
 args = parser.parse_args()
     
 if __name__ == "__main__":
-    serve('127.0.0.1:50053', 1024)
+    serve()

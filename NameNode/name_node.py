@@ -323,7 +323,6 @@ class NameNode(n_pb2_grpc.NameNodeServicer):
         return n_pb2.HelloResponse()
 
 def serve():
-    global server
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     n_pb2_grpc.add_NameNodeServicer_to_server(NameNode() ,server)
     server.add_insecure_port(DFS_parameter.__name_node_ip_port__)

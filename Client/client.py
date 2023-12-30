@@ -352,134 +352,148 @@ class Client:
         self.close(path, 'write')
 
 
-    def vim(self, path):
-        file_addr = self.open(path, 'write')
-        if file_addr is None:
+    def vim(self, path, mode=None):
+        if mode is None:
+            file_addr = self.open(path, 'write')
+            if file_addr is None:
+                return
+            # 打开vim
+            subprocess.run(['vim.exe', file_addr])
+            self.close(path, 'write')
+        elif mode == '-M':
+            file_addr = self.open(path, 'read')
+            if file_addr is None:
+                return
+            # 打开vim
+            subprocess.run(['vim.exe', '-M', file_addr])
+            self.close(path, 'read')
+        else:
+            print('Invalid mode')
             return
-        # 打开记事本
-        subprocess.run(['vim.exe', file_addr])
-        self.close(path, 'write')
 
-def help(self, cmd=None):
-    if cmd is None:
-        print("""
-            General Help
+    def help(self, cmd=None):
+        if cmd is None:
+            print("""
+                General Help
 
-            Usage: command [options] [arguments]
+                Usage: command [options] [arguments]
 
-            Available Commands:
-            ls             List contents of a directory.
-            cd             Change the current working directory.
-            rm             Remove file.
-            touch          Create an empty file.
-            mkdir          Create a new directory.
-            rmdir          Remove an directory.
-            cat            Display the contents of a file.
-            notepad        Open a file in Notepad.
-            vim            Open a file in the Vim text editor.
-            help           Display help information for a specific command.
+                Available Commands:
+                ls             List contents of a directory.
+                cd             Change the current working directory.
+                rm             Remove file.
+                touch          Create an empty file.
+                mkdir          Create a new directory.
+                rmdir          Remove an directory.
+                cat            Display the contents of a file.
+                notepad        Open a file in Notepad.
+                vim            Open a file in the Vim text editor.
+                help           Display help information for a specific command.
 
-            Usage Examples:
-            ls /path/to/directory
-            cd /path/to/directory
-            rm /path/to/myfile.txt
-            touch myfile.txt
-            mkdir new_directory
-            rmdir /path/to/directory
-            cat myfile.txt
-            notepad myfile.txt
-            vim myfile.txt
-            help ls
+                Usage Examples:
+                ls /path/to/directory
+                cd /path/to/directory
+                rm /path/to/myfile.txt
+                touch myfile.txt
+                mkdir new_directory
+                rmdir /path/to/directory
+                cat myfile.txt
+                notepad myfile.txt
+                vim myfile.txt
+                help ls
 
-            For detailed help on each command, use 'help' followed by the command name:
-            help ls
-            help cd
-            """)
-    elif cmd == 'ls':
-        print("""
-            ls Command
+                For detailed help on each command, use 'help' followed by the command name:
+                help ls
+                help cd
+                """)
+        elif cmd == 'ls':
+            print("""
+                ls Command
 
-            Usage: ls [directory]
-            Description: List the contents of the specified directory. If no directory is provided, list the contents of the current directory.
-            Example: ls /path/to/directory
-            """)
-    elif cmd == 'cd':
-        print("""
-            cd Command
+                Usage: ls [directory]
+                Description: List the contents of the specified directory. If no directory is provided, list the contents of the current directory.
+                Example: ls /path/to/directory
+                """)
+        elif cmd == 'cd':
+            print("""
+                cd Command
 
-            Usage: cd <directory>
-            Description: Change the current working directory to the specified directory.
-            Example: cd /path/to/directory
-            """)
-    elif cmd == 'rm':
-        print("""
-            rm Command
+                Usage: cd <directory>
+                Description: Change the current working directory to the specified directory.
+                Example: cd /path/to/directory
+                """)
+        elif cmd == 'rm':
+            print("""
+                rm Command
 
-            Usage: rm [options] file
-            Description: Remove the specified file.
-            Example: rm /path/to/myfile.txt
-            """)
-    elif cmd == 'touch':
-        print("""
-            touch Command
+                Usage: rm [options] file
+                Description: Remove the specified file.
+                Example: rm /path/to/myfile.txt
+                """)
+        elif cmd == 'touch':
+            print("""
+                touch Command
 
-            Usage: touch <filename>
-            Description: Create an empty file with the specified filename.
-            Example: touch myfile.txt
-            """)
-    elif cmd == 'mkdir':
-        print("""
-            mkdir Command
+                Usage: touch <filename>
+                Description: Create an empty file with the specified filename.
+                Example: touch myfile.txt
+                """)
+        elif cmd == 'mkdir':
+            print("""
+                mkdir Command
 
-            Usage: mkdir <directory>
-            Description: Create a new directory with the specified name.
-            Example: mkdir myfile.txt
-            """)
-    elif cmd == 'rmdir':
-        print("""
-            rmdir Command
+                Usage: mkdir <directory>
+                Description: Create a new directory with the specified name.
+                Example: mkdir myfile.txt
+                """)
+        elif cmd == 'rmdir':
+            print("""
+                rmdir Command
 
-            Usage: rmdir <directory>
-            Description: Remove the specified directory.
-            Example: rmdir directory
-            """)
-    elif cmd == 'cat':
-        print("""
-            cat Command
+                Usage: rmdir <directory>
+                Description: Remove the specified directory.
+                Example: rmdir directory
+                """)
+        elif cmd == 'cat':
+            print("""
+                cat Command
 
-            Usage: cat <file>
-            Description: Display the contents of the specified file.
-            Example: cat myfile.txt
-            """)
-    elif cmd == 'notepad':
-        print("""
-            notepad Command
+                Usage: cat <file>
+                Description: Display the contents of the specified file.
+                Example: cat myfile.txt
+                """)
+        elif cmd == 'notepad':
+            print("""
+                notepad Command
 
-            Usage: notepad <file>
-            Description: Open the specified file in the Notepad text editor.
-            Example: notepad myfile.txt
-            """)
-    elif cmd == 'vim':
-        print("""
-            vim Command
+                Usage: notepad <file>
+                Description: Open the specified file in the Notepad text editor.
+                Example: notepad myfile.txt
+                """)
+        elif cmd == 'vim':
+            print("""
+                vim Command
 
-            Usage: vim <file>
-            Description: Open the specified file in the Vim text editor.
-            Example: vim myfile.txt
-            """)
-    elif cmd == 'help':
-        print("""
-            help Command
+                Usage: vim <file>
+                Description: Open the specified file in the Vim text editor.
+                Options:
+                -M  Open file in read-only mode.
+                Example: vim myfile.txt
+                         vim myfile.txt -M
+                """)
+        elif cmd == 'help':
+            print("""
+                help Command
 
-            Usage: help [command]
-            Description: Display help information for the specified command. If no command is provided, show a list of available commands.
-            Example: help ls
-            """)
-    else:
-        print(f"Error: Unknown command '{cmd}'. Use 'help' for a list of available commands.")
+                Usage: help [command]
+                Description: Display help information for the specified command. If no command is provided, show a list of available commands.
+                Example: help ls
+                """)
+        else:
+            print(f"Error: Unknown command '{cmd}'. Use 'help' for a list of available commands.")
 
 
-def run(client: Client):
+def run():
     client = Client(args.username)
     while(True):
         try:
@@ -503,12 +517,12 @@ def run(client: Client):
                     getattr(client, cmd)(path)
                 else:
                     print('Invalid command')
-            # elif len(cmd) == 3: # open, close
-            #     cmd, path, mode = cmd
-            #     if cmd in ['open', 'close']:
-            #         getattr(client, cmd)(path, mode)
-            #     else:
-            #         print('Invalid command')
+            elif len(cmd) == 3: # TEST:open, close
+                cmd, path, mode = cmd
+                if cmd in ['open', 'close', 'vim']:
+                    getattr(client, cmd)(path, mode)
+                else:
+                    print('Invalid command')
             else:
                 print('Invalid command')
         except KeyboardInterrupt:
@@ -517,7 +531,7 @@ def run(client: Client):
 
 
 parser = argparse.ArgumentParser(description='LiteDFS Client')
-parser.add_argument('username', type=str, help='The user\'s name shown in CLI', default='user')
+parser.add_argument('--username', type=str, help='The user\'s name shown in CLI', default='user')
 args = parser.parse_args()
 
 if __name__ == "__main__":
