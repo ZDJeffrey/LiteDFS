@@ -273,17 +273,17 @@ class Client:
                 folder[path_list[-1]] = {}
                 file = folder[path_list[-1]]
                 file['id'] = str(uuid.uuid5(uuid.NAMESPACE_URL, '/'.join(path_list))) # 文件id
-                file['ts'] = response.ts # 时间戳
-                # 根据节点获取文件写入缓存
-                node = response.node
-                offset = response.offset
-                with grpc.insecure_channel(node) as channel:
-                    stub = d_pb2_grpc.DataNodeStub(channel)
-                    response_iterator = stub.read(d_pb2.ReadDataRequest(offset=offset))
-                    with open(self.prefix + file['id'], 'wb') as cache:
-                        for response in response_iterator:
-                            cache.write(response.data)
-                return self.prefix + file['id']
+            file['ts'] = response.ts # 时间戳
+            # 根据节点获取文件写入缓存
+            node = response.node
+            offset = response.offset
+            with grpc.insecure_channel(node) as channel:
+                stub = d_pb2_grpc.DataNodeStub(channel)
+                response_iterator = stub.read(d_pb2.ReadDataRequest(offset=offset))
+                with open(self.prefix + file['id'], 'wb') as cache:
+                    for response in response_iterator:
+                        cache.write(response.data)
+            return self.prefix + file['id']
         return None
 
 
