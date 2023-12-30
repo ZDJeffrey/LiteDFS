@@ -282,6 +282,8 @@ class Client:
                 response_iterator = stub.read(d_pb2.ReadDataRequest(offset=offset))
                 with open(self.prefix + file['id'], 'wb') as cache:
                     for response in response_iterator:
+                        if DFS_parameter.__verbose_message__:
+                            print(f'get chunk')
                         cache.write(response.data)
             return self.prefix + file['id']
         return None

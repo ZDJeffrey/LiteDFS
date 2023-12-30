@@ -62,6 +62,8 @@ class DataNode(d_pb2_grpc.DataNodeServicer):
                 offset = chunk.offset
                 file = open(self.prefix+str(offset),'wb')
             else:
+                if DFS_parameter.__verbose_message__:
+                    print('Write chunk')
                 file.write(chunk.data)
         file.close()
         if DFS_parameter.__verbose_message__:

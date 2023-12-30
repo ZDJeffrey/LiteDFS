@@ -1,7 +1,7 @@
 import os
 import sys
 
-__verbose_message__=True
+__verbose_message__=False
 
 __client_cache__=os.path.dirname(os.path.abspath(__file__))+'/Cache/' # 缓存模拟目录
 
